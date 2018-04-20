@@ -39,7 +39,18 @@ exports.getUser = function(req, res) {
     if (err)
       res.send(err);
 
-    console.log("User " + user + " retrieved.");
+    res.json(user);
+  });
+};
+
+// Create endpoint /api/users/:user_id for USER
+exports.getUserByName = function(req, res) {
+  // Use the Game model to find a specific game
+  User.find({username: req.params.username}, function(err, user) {
+    if (err)
+      res.send(err);
+
+    res.status(201);
     res.json(user);
   });
 };
@@ -54,10 +65,12 @@ exports.putUser = function(req, res) {
     coins: req.body.exp,
     powerUp1: req.body.powerUp1,
     powerUp2: req.body.powerUp2,
-    powerUp3: req.body.powerUp3
+    powerUp3: req.body.powerUp3,
+    friends: req.body.friends
   }, function(err, num, raw) {
     if (err)
       res.send(err);
+
 
     res.json({ message: num + ' updated' });
   });

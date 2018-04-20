@@ -47,7 +47,13 @@ var UserSchema = new mongoose.Schema({
     type: Number,
     default: 0,
     required: false
+  },
+  friends: {
+    type: String,
+    default: "",
+    required: false
   }
+
 });
 
 // Execute before each user.save() call

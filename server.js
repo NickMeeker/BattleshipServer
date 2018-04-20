@@ -31,13 +31,19 @@ var router = express.Router();
 // Create endpoint handlers for /exp
 router.route('/games')
   .post(passport.authenticate('jwt', { session: false }), gameController.postGame)
-  .get(passport.authenticate('jwt', { session: false }), gameController.getGame);
+  .get(passport.authenticate('jwt', { session: false }), gameController.getGames);
 
 // Create endpoint handlers for /exp/:exp_id
 router.route('/games/:game_id')
   .get(passport.authenticate('jwt', { session: false }), gameController.getGame)
   .put(passport.authenticate('jwt', { session: false }), gameController.putGame)
   .delete(passport.authenticate('jwt', { session: false }), gameController.deleteGame);
+
+router.route('/games/hostPlayer/:hostPlayer')
+  .get(passport.authenticate('jwt', { session: false }), gameController.getGameByHost)
+
+router.route('/games/guestPlayer/:guestPlayer')
+  .get(passport.authenticate('jwt', { session: false }), gameController.getGameByGuest)
 
 // Create endpoint handlers for /users
 router.route('/users')
@@ -48,7 +54,8 @@ router.route('/users/:user_id')
   .get(passport.authenticate('jwt', { session: false }), userController.getUser)
   .put(passport.authenticate('jwt', { session: false }), userController.putUser);
 
-
+router.route('/users/username/:username')
+  .get(passport.authenticate('jwt', {session: false}), userController.getUserByName)
 
 router.route('/authenticate')
   .post(userController.authenticate);
